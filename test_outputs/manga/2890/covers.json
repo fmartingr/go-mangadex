@@ -1,0 +1,78 @@
+{
+    "code": 200,
+    "data": [
+        {
+            "url": "https://mangadex.org/images/covers/2890v1.jpg",
+            "volume": "1"
+        },
+        {
+            "url": "https://mangadex.org/images/covers/2890v2.jpg",
+            "volume": "2"
+        },
+        {
+            "url": "https://mangadex.org/images/covers/2890v3.jpg",
+            "volume": "3"
+        },
+        {
+            "url": "https://mangadex.org/images/covers/2890v4.jpg",
+            "volume": "4"
+        },
+        {
+            "url": "https://mangadex.org/images/covers/2890v5.jpg",
+            "volume": "5"
+        },
+        {
+            "url": "https://mangadex.org/images/covers/2890v6.jpg",
+            "volume": "6"
+        },
+        {
+            "url": "https://mangadex.org/images/covers/2890v7.jpg",
+            "volume": "7"
+        },
+        {
+            "url": "https://mangadex.org/images/covers/2890v8.jpg",
+            "volume": "8"
+        },
+        {
+            "url": "https://mangadex.org/images/covers/2890v9.jpg",
+            "volume": "9"
+        },
+        {
+            "url": "https://mangadex.org/images/covers/2890v10.jpg",
+            "volume": "10"
+        },
+        {
+            "url": "https://mangadex.org/images/covers/2890v11.jpg",
+            "volume": "11"
+        },
+        {
+            "url": "https://mangadex.org/images/covers/2890v12.jpg",
+            "volume": "12"
+        },
+        {
+            "url": "https://mangadex.org/images/covers/2890v13.jpg",
+            "volume": "13"
+        },
+        {
+            "url": "https://mangadex.org/images/covers/2890v14.jpg",
+            "volume": "14"
+        },
+        {
+            "url": "https://mangadex.org/images/covers/2890v15.jpg",
+            "volume": "15"
+        },
+        {
+            "url": "https://mangadex.org/images/covers/2890v16.jpg",
+            "volume": "16"
+        },
+        {
+            "url": "https://mangadex.org/images/covers/2890v17.jpg",
+            "volume": "17"
+        },
+        {
+            "url": "https://mangadex.org/images/covers/2890v18.jpg",
+            "volume": "18"
+        }
+    ],
+    "status": "OK"
+}

@@ -1,0 +1,33 @@
+{
+  "code": 200,
+  "status": "OK",
+  "data": {
+    "id": 4174,
+    "name": "PiratasOP",
+    "altNames": "",
+    "language": "es",
+    "leader": {
+      "id": 1,
+      "name": "MangaDex"
+    },
+    "members": [],
+    "description": "",
+    "website": "",
+    "discord": "",
+    "ircServer": "",
+    "ircChannel": "",
+    "email": "",
+    "founded": "2018-01-01",
+    "likes": 2,
+    "follows": 3,
+    "views": 1369,
+    "chapters": 517,
+    "threadId": 0,
+    "threadPosts": null,
+    "isLocked": false,
+    "isInactive": false,
+    "delay": 0,
+    "lastUpdated": 1525465188,
+    "banner": null
+  }
+}

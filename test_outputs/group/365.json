@@ -1,0 +1,33 @@
+{
+  "code": 200,
+  "status": "OK",
+  "data": {
+    "id": 365,
+    "name": "Nest Scans",
+    "altNames": "",
+    "language": "gb",
+    "leader": {
+      "id": 4907,
+      "name": "Neobrakeon"
+    },
+    "members": [],
+    "description": "We are back. Uploading Aso Haro's works",
+    "website": "",
+    "discord": "https://discord.gg/Serch#9564",
+    "ircServer": "",
+    "ircChannel": "",
+    "email": "",
+    "founded": "2018-01-01",
+    "likes": 4,
+    "follows": 3,
+    "views": 3713,
+    "chapters": 76,
+    "threadId": 0,
+    "threadPosts": null,
+    "isLocked": false,
+    "isInactive": false,
+    "delay": 0,
+    "lastUpdated": 1518556898,
+    "banner": "https://mangadex.org/images/groups/365.jpg"
+  }
+}

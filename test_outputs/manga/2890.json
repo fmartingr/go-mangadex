@@ -1,0 +1,79 @@
+{
+    "code": 200,
+    "data": {
+        "altTitles": [
+            "Imawa no Kuni no Alice",
+            "Imawa no Kuni no Alice: Alice in Borderland",
+            "Imawa no Kuni no Arisu",
+            "Алиса в Пограничье",
+            "อลิศในแดนมรณะ (Thai)",
+            "今際の国のアリス",
+            "今際の国のアリス Alice in Borderland",
+            "弥留之国的爱丽丝",
+            "彌留之國的愛麗絲"
+        ],
+        "artist": [
+            "Asou Haro"
+        ],
+        "author": [
+            "Asou Haro"
+        ],
+        "comments": 77,
+        "description": "Alice Ryouhei will leave high school soon, but he's trying to avoid thinking about his future. Late one night, when he's hanging out with his tough friend Karube and his silly, girl-crazy friend Chota, they see fireworks. After one blindingly bright explosion, they find themselves waking up in a different world. In this 'Borderland,' people are forced to either participate in potentially deadly games or simply die. Will Chota, Karube, and Ryouhei be able to survive this dangerous new world, and is there a way they can get back to their original lives?\r\n\r\n[hr][b][u]Russian / Русский:[/u][/b]  [spoiler]Прогульщик и двоечник Арису Рёхей не хочет учиться и не представляет, чем займётся после окончания школы. Зато у него есть мечта - попасть в другой мир, где нет учителей и родителей и где ты сам хозяин своей судьбы. Только вот желания - штука опасная, они исполняются. Арису и его друзья попадают в странный мир, где они должны принять участие в игре. И всё бы ничего, да только отказаться нельзя и ставка в этой игре - жизнь.[/spoiler] \r\n[hr][b]Links:[/b]\r\n[*][url=https://www.animenewsnetwork.com/encyclopedia/anime.php?id=16495]OAV on ANN[/url]",
+        "follows": 14591,
+        "id": 2890,
+        "isHentai": false,
+        "lastChapter": "64.1",
+        "lastUploaded": 1612047031,
+        "lastVolume": "18",
+        "links": {
+            "al": "63031",
+            "amz": "https://www.amazon.co.jp/gp/product/B074B77X3H",
+            "ap": "imawa-no-kuni-no-alice",
+            "bw": "series/124293",
+            "ebj": "https://www.ebookjapan.jp/ebj/132052",
+            "kt": "6535",
+            "mal": "33031",
+            "mu": "59540"
+        },
+        "mainCover": "https://mangadex.org/images/manga/2890.jpg",
+        "publication": {
+            "demographic": 1,
+            "language": "jp",
+            "status": 2
+        },
+        "rating": {
+            "bayesian": 8.81,
+            "mean": 8.87,
+            "users": 1422
+        },
+        "relations": [
+            {
+                "id": 56129,
+                "isHentai": false,
+                "title": "Alice in Borderland Retry",
+                "type": 2
+            },
+            {
+                "id": 19613,
+                "isHentai": false,
+                "title": "Alice on Border Road",
+                "type": 5
+            }
+        ],
+        "tags": [
+            2,
+            8,
+            14,
+            22,
+            34,
+            35,
+            41,
+            55,
+            77
+        ],
+        "title": "Alice in Borderland",
+        "views": 407142
+    },
+    "status": "OK"
+}

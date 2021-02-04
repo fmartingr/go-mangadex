@@ -1,0 +1,55 @@
+{
+  "code": 200,
+  "status": "OK",
+  "data": {
+    "id": 83089,
+    "hash": "d3892b1d5a958d5bd1dc1ad0a5587216",
+    "mangaId": 2890,
+    "mangaTitle": "Alice in Borderland",
+    "volume": "18",
+    "chapter": "64.1",
+    "title": "731st Day of Restitution",
+    "language": "gb",
+    "groups": [
+      {
+        "id": 365,
+        "name": "Nest Scans"
+      }
+    ],
+    "uploader": 1756,
+    "timestamp": 1518556898,
+    "threadId": 12514,
+    "comments": 51,
+    "views": 60518,
+    "status": "OK",
+    "pages": [
+      "x1.jpg",
+      "x2.jpg",
+      "x3.jpg",
+      "x4.jpg",
+      "x5.jpg",
+      "x6.jpg",
+      "x7.jpg",
+      "x8.jpg",
+      "x9.jpg",
+      "x10.jpg",
+      "x11.jpg",
+      "x12.jpg",
+      "x13.jpg",
+      "x14.jpg",
+      "x15.jpg",
+      "x16.jpg",
+      "x17.jpg",
+      "x18.jpg",
+      "x19.jpg",
+      "x20.jpg",
+      "x21.jpg",
+      "x22.jpg",
+      "x23.jpg",
+      "x24.jpg",
+      "x25.jpg"
+    ],
+    "server": "https://dgc5etvhteq74.t5k83gr3d0m6a.mangadex.network:443/S3bW5smsFvqt0UhqAgllre0Mi3ntTZ2dR7O4xxZJxXS1t0vGcrJCTr7Y_Vl9HpqWEbt4Z9G1-ye9GJwLQHjuAad90tI3CRIIOg9muugrOdNF1tQwGfo680GnexYHc53fy7IEBYrm9G0UzeDXsEUBmBPn46OkxtVH503LGJhLGOn6yjR4CUjaHcc1IxH35GKytPlKyB-QLwqj5r97j-zTGFDnQ_Xg/data/",
+    "serverFallback": "https://s2.mangadex.org/data/"
+  }
+}

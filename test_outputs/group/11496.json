@@ -1,0 +1,38 @@
+{
+  "code": 200,
+  "status": "OK",
+  "data": {
+    "id": 11496,
+    "name": "Little Garden",
+    "altNames": "",
+    "language": "fr",
+    "leader": {
+      "id": 910521,
+      "name": "Nolt"
+    },
+    "members": [
+      {
+        "id": 760129,
+        "name": "Nooody"
+      }
+    ],
+    "description": "Bonjour &agrave; toutes et &agrave; tous, nous sommes la Garden Team de Little Garden, une &eacute;quipe fran&ccedil;aise de scantrad, qui a &eacute;t&eacute; cr&eacute;&eacute;e il y a 2 ans environ. Nous traduisons principalement One Piece et Kingdom. Ce qui nous diff&eacute;rencie des autres ? La pr&eacute;sence de coloristes dans nos rangs dans le but de coloriser les chapitres que nous proposons sur notre site  http://little-garden.fr/ ! \r\n\r\nComme toute team, nous recherchons en continu de nouveaux membres qui pourraient nous aider dans nos projets sur diff&eacute;rents domaines : \r\n- Traducteur anglais-&gt; fran&ccedil;ais / Japonais -&gt; fran&ccedil;ais / Chinois -&gt; Fran&ccedil;ais / ... , \r\n- Correcteur (Fran&ccedil;ais), Checkeur si certains pr&eacute;f&egrave;rent\r\n- Retoucheur (PhotoShop / Gimp), on peut vous former de A &agrave; Z &agrave; ce r&ocirc;le... \r\n et des Coloristes, qui est l'&acirc;me de Little Garden \r\n\r\nSi vous connaissez quelqu'un qui souhaite int&eacute;grer un groupe b&eacute;n&eacute;vole qui vit de la passion des mangas comme OP, n'h&eacute;sitez pas &agrave; rejoindre notre discord !",
+    "website": "https://little-garden.fr/",
+    "discord": "https://discord.gg/wjMKQmr",
+    "ircServer": "",
+    "ircChannel": "",
+    "email": "",
+    "founded": "2018-05-01",
+    "likes": 3,
+    "follows": 9,
+    "views": 1072,
+    "chapters": 14,
+    "threadId": 0,
+    "threadPosts": null,
+    "isLocked": true,
+    "isInactive": false,
+    "delay": 0,
+    "lastUpdated": 1609012544,
+    "banner": "https://mangadex.org/images/groups/11496.png"
+  }
+}

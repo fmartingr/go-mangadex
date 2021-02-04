@@ -41,8 +41,12 @@ type Manga struct {
 	// Links // key->value, fixed keys
 	Cover string `json:"mainCover"`
 	// Publication
+	// - Demographic ->
+	// - Language: 2 char code
+	// - Status
+	//   2 -> Completed
 	// Rating
-	// Relations
+	// Relations -> test_output/relations.json
 	// Tags
 	Title string `json:"title"`
 	Views int    `json:"views"`
