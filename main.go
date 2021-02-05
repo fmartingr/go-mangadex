@@ -3,13 +3,11 @@ package main
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"net/url"
 	"path"
-	"reflect"
 	"strconv"
 )
 
@@ -70,13 +68,77 @@ func (manga *Manga) GetCovers() ([]MangaCover, error) {
 
 	errJSON := json.Unmarshal(response.Data, &result)
 	if errJSON != nil {
-		log.Printf("[error] %s", errJSON)
+		return result, errJSON
 	}
+	return result, nil
+}
+
+type GetChaptersParams struct {
+	Limit       int  `json:"limit"`
+	Page        int  `json:"p"`
+	BlockGroups bool `json:"blockgroups"`
+}
+
+func NewGetChaptersParams() GetChaptersParams {
+	return GetChaptersParams{
+		Limit:       100,
+		Page:        0,
+		BlockGroups: false,
+	}
+}
+
+func (params *GetChaptersParams) Validate() {
+	if params.Limit < 1 || params.Limit > 100 {
+		params.Limit = 100
+	}
+}
+
+func (params *GetChaptersParams) AsQueryParams() url.Values {
+	queryParams := url.Values{}
+
+	if params.Page > 0 {
+		queryParams.Add("p", strconv.FormatInt(int64(params.Page), 10))
+	}
+	queryParams.Add("limit", strconv.FormatInt(int64(params.Limit), 10))
+	if params.BlockGroups {
+		queryParams.Add("blockgroups", strconv.FormatBool(params.BlockGroups))
+	}
+
+	return queryParams
+}
+
+func (manga *Manga) GetChapters(params GetChaptersParams) ([]MangaChapter, error) {
+	var result []MangaChapter
+	params.Validate()
+
+	response, errRequest := DoRequest("GET", APIBaseURL+path.Join("manga", strconv.Itoa(manga.ID), "chapters")+"?"+params.AsQueryParams().Encode())
+	if errRequest != nil {
+		return result, errRequest
+	}
+
+	var mangaDexChaptersResponse MangaDexChaptersResponse
+
+	errJSON := json.Unmarshal(response.Data, &mangaDexChaptersResponse)
+	if errJSON != nil {
+		return result, errJSON
+	}
+	result = mangaDexChaptersResponse.Chapters
+
 	return result, nil
 }
 
 func (manga *Manga) GetChapter(chapter string) (MangaChapter, error) {
 	var result MangaChapter
+
+	response, errRequest := DoRequest("GET", APIBaseURL+path.Join("chapter", chapter))
+	if errRequest != nil {
+		return result, errRequest
+	}
+
+	errJSON := json.Unmarshal(response.Data, &result)
+	if errJSON != nil {
+		return result, errJSON
+	}
 
 	return result, nil
 }
@@ -93,7 +155,6 @@ func GetManga(mangaID int) (Manga, error) {
 	if errRequest != nil {
 		return result, errRequest
 	}
-	//log.Print(response)
 
 	errJSON := json.Unmarshal(response.Data, &result)
 	if errJSON != nil {
@@ -102,18 +163,20 @@ func GetManga(mangaID int) (Manga, error) {
 	return result, nil
 }
 
-// func (manga *Manga)
-
 func main() {
 	manga, err := GetManga(2890)
 	if err != nil {
 		panic(err)
 	}
 
-	v := reflect.ValueOf(manga)
-	typeOfS := v.Type()
+	log.Printf("Manga: %s", manga.Title)
 
-	for i := 0; i < v.NumField(); i++ {
-		fmt.Printf("%20s: %v\n", typeOfS.Field(i).Name, v.Field(i).Interface())
+	chapters, err := manga.GetChapters(NewGetChaptersParams())
+	if err != nil {
+		panic(err)
+	}
+
+	for i := range chapters {
+		log.Printf("v%2s %3s \t %s", chapters[i].Volume, chapters[i].Chapter, chapters[i].Title)
 	}
 }
