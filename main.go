@@ -4,11 +4,12 @@ import (
 	"encoding/json"
 	"errors"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"net/url"
 	"path"
 	"strconv"
+
+	"github.com/sirupsen/logrus"
 )
 
 const APIBaseURL = "https://api.mangadex.org/v2/"
@@ -20,7 +21,7 @@ func DoRequest(method string, requestURL string) (*MangaDexResponse, error) {
 		return &result, errParse
 	}
 
-	log.Printf("[debug] request: %s", parsedURL)
+	logrus.Tracef("Making request %s", parsedURL)
 	request := http.Request{
 		Method: method,
 		URL:    parsedURL,
@@ -31,14 +32,17 @@ func DoRequest(method string, requestURL string) (*MangaDexResponse, error) {
 
 	response, errResponse := http.DefaultClient.Do(&request)
 	if errResponse != nil {
-		log.Print(errResponse)
+		logrus.Tracef("Request error: %s", errResponse)
 		return &result, errResponse
 	}
 
 	if response.StatusCode != 200 {
-		log.Printf("[error] Status code != 200 -- %d", response.StatusCode)
+		logrus.Tracef("Response status code not successful: %d", response.StatusCode)
+		logrus.Tracef("Response body: %s", response.Body)
 		return &result, errors.New(strconv.Itoa(response.StatusCode))
 	}
+
+	logrus.Tracef("Response status code: %s", response.Status)
 
 	if response.Body != nil {
 		defer response.Body.Close()
@@ -46,13 +50,15 @@ func DoRequest(method string, requestURL string) (*MangaDexResponse, error) {
 
 	body, errRead := ioutil.ReadAll(response.Body)
 	if errRead != nil {
-		log.Printf("[error] %s", errRead)
+		logrus.Errorf("Error reading body: %s", errRead)
 		return &result, errRead
 	}
 
+	logrus.Tracef("Response body: %s", body)
+
 	errJSON := json.Unmarshal(body, &result)
 	if errJSON != nil {
-		log.Print(errJSON)
+		logrus.Errorf("Error parsing body: %s", errJSON)
 		return &result, errJSON
 	}
 
@@ -63,11 +69,13 @@ func (manga *Manga) GetCovers() ([]MangaCover, error) {
 	var result []MangaCover
 	response, errRequest := DoRequest("GET", APIBaseURL+path.Join("manga", strconv.Itoa(manga.ID), "covers"))
 	if errRequest != nil {
+		logrus.Errorf("Request error: %s", errRequest)
 		return result, errRequest
 	}
 
 	errJSON := json.Unmarshal(response.Data, &result)
 	if errJSON != nil {
+		logrus.Errorf("Error parsing JSON: %s", errJSON)
 		return result, errJSON
 	}
 	return result, nil
@@ -113,6 +121,7 @@ func (manga *Manga) GetChapters(params GetChaptersParams) ([]MangaChapter, error
 
 	response, errRequest := DoRequest("GET", APIBaseURL+path.Join("manga", strconv.Itoa(manga.ID), "chapters")+"?"+params.AsQueryParams().Encode())
 	if errRequest != nil {
+		logrus.Errorf("Request error: %s", errRequest)
 		return result, errRequest
 	}
 
@@ -120,6 +129,7 @@ func (manga *Manga) GetChapters(params GetChaptersParams) ([]MangaChapter, error
 
 	errJSON := json.Unmarshal(response.Data, &mangaDexChaptersResponse)
 	if errJSON != nil {
+		logrus.Errorf("Error parsing JSON: %s", errJSON)
 		return result, errJSON
 	}
 	result = mangaDexChaptersResponse.Chapters
@@ -132,11 +142,13 @@ func (manga *Manga) GetChapter(chapter string) (MangaChapter, error) {
 
 	response, errRequest := DoRequest("GET", APIBaseURL+path.Join("chapter", chapter))
 	if errRequest != nil {
+		logrus.Errorf("Request error: %s", errRequest)
 		return result, errRequest
 	}
 
 	errJSON := json.Unmarshal(response.Data, &result)
 	if errJSON != nil {
+		logrus.Errorf("Error parsing JSON: %s", errJSON)
 		return result, errJSON
 	}
 
@@ -153,30 +165,14 @@ func GetManga(mangaID int) (Manga, error) {
 	result := Manga{}
 	response, errRequest := DoRequest("GET", APIBaseURL+path.Join("manga", strconv.Itoa(mangaID)))
 	if errRequest != nil {
+		logrus.Errorf("Request error: %s", errRequest)
 		return result, errRequest
 	}
 
 	errJSON := json.Unmarshal(response.Data, &result)
 	if errJSON != nil {
-		log.Printf("[error] %s", errJSON)
+		logrus.Errorf("Error parsing JSON: %s", errJSON)
+		return result, errJSON
 	}
 	return result, nil
-}
-
-func main() {
-	manga, err := GetManga(2890)
-	if err != nil {
-		panic(err)
-	}
-
-	log.Printf("Manga: %s", manga.Title)
-
-	chapters, err := manga.GetChapters(NewGetChaptersParams())
-	if err != nil {
-		panic(err)
-	}
-
-	for i := range chapters {
-		log.Printf("v%2s %3s \t %s", chapters[i].Volume, chapters[i].Chapter, chapters[i].Title)
-	}
 }
