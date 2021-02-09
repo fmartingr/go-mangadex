@@ -14,8 +14,8 @@ type MangaDexResponse struct {
 }
 
 type MangaDexChaptersResponse struct {
-	Chapters []MangaChapter `json:"chapters"`
-	Groups   []MangaGroup   `json:"groups"`
+	Chapters []MangaChapterList `json:"chapters"`
+	Groups   []MangaGroup       `json:"groups"`
 }
 
 type MangaRelation struct {
@@ -36,7 +36,7 @@ type MangaPublication struct {
 type MangaRating struct {
 	Bayesian float32 `json:"bayesian"`
 	Mean     float32 `json:"mean"`
-	Users    int32   `json:"users"`
+	Users    int     `json:"users"`
 }
 
 type MangaLinks struct {
@@ -79,25 +79,38 @@ type MangaCover struct {
 	Volume string `json:"volume"`
 }
 
-type MangaChapter struct {
-	ID         int32  `json:"id"`
+type MangaChapterBase struct {
+	ID         int    `json:"id"`
 	Hash       string `json:"hash"`
-	MangaID    int32  `json:"mangaId"`
+	MangaID    int    `json:"mangaId"`
 	MangaTitle string `json:"mangaTitle"`
 	Volume     string `json:"volume"`
 	Chapter    string `json:"chapter"`
 	Title      string `json:"title"`
 	Language   string `json:"language"`
-	Groups     []int  `json:"groups"`
 	Uploader   int    `json:"uploader"`
 	Timestamp  int64  `json:"timestamp"`
-	ThreadID   int32  `json:"threadId"`
-	Comments   int32  `json:"comments"`
-	Views      int32  `json:"views"`
+	ThreadID   int    `json:"threadId"`
+	Comments   int    `json:"comments"`
+	Views      int    `json:"views"`
+}
+
+type MangaChapterList struct {
+	MangaChapterBase
+	Groups []int `json:"groups"`
+}
+
+type MangaChapterDetail struct {
+	MangaChapterBase
+	Groups         []MangaGroup `json:"groups"`
+	Status         string       `json:"status"`
+	Pages          []string     `json:"pages"`
+	Server         string       `json:"server"`
+	ServerFallback string       `json:"serverFallback"`
 }
 
 type MangaGroupMember struct {
-	ID   int32  `json:"id"`
+	ID   int    `json:"id"`
 	Name string `json:"name"`
 }
 
@@ -115,15 +128,15 @@ type MangaGroup struct {
 	IRCChannel       string             `json:"ircChannel"`
 	EMail            string             `json:"email"`
 	Founded          string             `json:"founded"`
-	Likes            int32              `json:"likes"`
-	Follows          int32              `json:"follows"`
-	Views            int32              `json:"views"`
-	Chapters         int32              `json:"chapters"`
-	ThreadID         int32              `json:"threadId"`
-	ThreadPosts      int32              `json:"threadPosts"`
+	Likes            int                `json:"likes"`
+	Follows          int                `json:"follows"`
+	Views            int                `json:"views"`
+	Chapters         int                `json:"chapters"`
+	ThreadID         int                `json:"threadId"`
+	ThreadPosts      int                `json:"threadPosts"`
 	IsLocked         bool               `json:"isLocked"`
 	IsInactive       bool               `json:"isInactive"`
-	Delay            int32              `json:"delay"`
-	LastUpdated      int32              `json:"lastUpdated"`
+	Delay            int                `json:"delay"`
+	LastUpdated      int                `json:"lastUpdated"`
 	Banner           string             `json:"banner"`
 }

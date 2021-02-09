@@ -199,8 +199,8 @@ func (params *GetChaptersParams) AsQueryParams() url.Values {
 	return queryParams
 }
 
-func (manga *Manga) GetChapters(params GetChaptersParams) ([]MangaChapter, []MangaGroup, error) {
-	var mangaChaptersResult []MangaChapter
+func (manga *Manga) GetChapters(params GetChaptersParams) ([]MangaChapterList, []MangaGroup, error) {
+	var mangaChaptersResult []MangaChapterList
 	var mangaGroupsResult []MangaGroup
 	params.Validate()
 
@@ -221,8 +221,8 @@ func (manga *Manga) GetChapters(params GetChaptersParams) ([]MangaChapter, []Man
 	return mangaDexChaptersResponse.Chapters, mangaDexChaptersResponse.Groups, nil
 }
 
-func (manga *Manga) GetChapter(chapter string) (MangaChapter, error) {
-	var result MangaChapter
+func (manga *Manga) GetChapter(chapter string) (MangaChapterDetail, error) {
+	var result MangaChapterDetail
 
 	response, errRequest := DoRequest("GET", APIBaseURL+path.Join("chapter", chapter))
 	if errRequest != nil {
@@ -235,12 +235,6 @@ func (manga *Manga) GetChapter(chapter string) (MangaChapter, error) {
 		logrus.Errorf("Error parsing JSON: %s", errJSON)
 		return result, errJSON
 	}
-
-	return result, nil
-}
-
-func (manga *Manga) GetVolumeChapters(volume string) ([]MangaChapter, error) {
-	var result []MangaChapter
 
 	return result, nil
 }
