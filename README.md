@@ -2,7 +2,7 @@
 
 Mangadex API client in Golang.
 
-## Installation
+## Chaching
 
 ...
 
@@ -10,17 +10,42 @@ Mangadex API client in Golang.
 
 ``` go
 import (
-    mangadex "code.fmartingr.dev/fmartingr/go-mangadex"
+    "log"
+
+    "code.fmartingr.dev/fmartingr/go-mangadex"
 )
 
 func main() {
+    // Retrieve manga information
     manga, err := mangadex.GetManga(123)
-    if err != nil {
-        log.Println("[error] Retrieving manga: %s", err)
+    if errManga != nil {
+        log.Println("Error retrieving manga: %s", errManga)
     }
-    // manga.GetChapter(1)
-    // manga.GetCovers()
-    // manga.GetVolume()
-}
 
+    // Retrieve a list of chapters 
+    chaptersRequest := NewGetChaptersParams()
+    chapters, errChapterList = manga.getChapters(chaptersRequest)
+    if errChapterList != nil {
+        log.Println("Error retrieving chapters page %d: %s", chaptersRequest.Page, errChapterList)
+    }
+        
+    // Disables chache reads for requests beyond this point
+    mangadex.DisableCache()
+
+    // Retrieve a specific chapter detail
+    // This will return more information than the list (the pages, server, etc)
+    chapter, err := manga.GetChapter(1)
+    if errChapter != nil {
+        log.Println("Error retrieving chapter: %s", errChapter)
+    }
+
+    // Re-enables the cache
+    mangadex.EnableCache()
+
+    // Get all covers for this manga
+    covers, errCovers := manga.GetCovers()
+    if errCovers != nil {
+        log.Println("Error retreiving covers: %s", errCovers)
+    }
+}
 ```

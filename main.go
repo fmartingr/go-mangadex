@@ -18,7 +18,7 @@ import (
 
 const APIBaseURL = "https://api.mangadex.org/v2/"
 
-var cacheEnabled bool = false
+var cacheEnabled bool = true
 
 func EnableCache() {
 	cacheEnabled = true
@@ -70,7 +70,7 @@ func initCache() {
 	}
 }
 
-func DoRequest(method string, requestURL string) (*MangaDexResponse, error) {
+func doRequest(method string, requestURL string) (*MangaDexResponse, error) {
 	result := MangaDexResponse{}
 	parsedURL, errParse := url.Parse(requestURL)
 	if errParse != nil {
@@ -149,22 +149,6 @@ func DoRequest(method string, requestURL string) (*MangaDexResponse, error) {
 	return &result, nil
 }
 
-func (manga *Manga) GetCovers() ([]MangaCover, error) {
-	var result []MangaCover
-	response, errRequest := DoRequest("GET", APIBaseURL+path.Join("manga", strconv.Itoa(manga.ID), "covers"))
-	if errRequest != nil {
-		logrus.Errorf("Request error: %s", errRequest)
-		return result, errRequest
-	}
-
-	errJSON := json.Unmarshal(response.Data, &result)
-	if errJSON != nil {
-		logrus.Errorf("Error parsing JSON: %s", errJSON)
-		return result, errJSON
-	}
-	return result, nil
-}
-
 type GetChaptersParams struct {
 	Limit       int  `json:"limit"`
 	Page        int  `json:"p"`
@@ -179,13 +163,13 @@ func NewGetChaptersParams() GetChaptersParams {
 	}
 }
 
-func (params *GetChaptersParams) Validate() {
+func (params *GetChaptersParams) validate() {
 	if params.Limit < 1 || params.Limit > 100 {
 		params.Limit = 100
 	}
 }
 
-func (params *GetChaptersParams) AsQueryParams() url.Values {
+func (params *GetChaptersParams) asQueryParams() url.Values {
 	queryParams := url.Values{}
 
 	if params.Page > 0 {
@@ -202,9 +186,9 @@ func (params *GetChaptersParams) AsQueryParams() url.Values {
 func (manga *Manga) GetChapters(params GetChaptersParams) ([]MangaChapterList, []MangaGroup, error) {
 	var mangaChaptersResult []MangaChapterList
 	var mangaGroupsResult []MangaGroup
-	params.Validate()
+	params.validate()
 
-	response, errRequest := DoRequest("GET", APIBaseURL+path.Join("manga", strconv.Itoa(manga.ID), "chapters")+"?"+params.AsQueryParams().Encode())
+	response, errRequest := doRequest("GET", APIBaseURL+path.Join("manga", strconv.Itoa(manga.ID), "chapters")+"?"+params.asQueryParams().Encode())
 	if errRequest != nil {
 		logrus.Errorf("Request error: %s", errRequest)
 		return mangaChaptersResult, mangaGroupsResult, errRequest
@@ -224,7 +208,7 @@ func (manga *Manga) GetChapters(params GetChaptersParams) ([]MangaChapterList, [
 func (manga *Manga) GetChapter(chapter string) (MangaChapterDetail, error) {
 	var result MangaChapterDetail
 
-	response, errRequest := DoRequest("GET", APIBaseURL+path.Join("chapter", chapter))
+	response, errRequest := doRequest("GET", APIBaseURL+path.Join("chapter", chapter))
 	if errRequest != nil {
 		logrus.Errorf("Request error: %s", errRequest)
 		return result, errRequest
@@ -241,7 +225,23 @@ func (manga *Manga) GetChapter(chapter string) (MangaChapterDetail, error) {
 
 func GetManga(mangaID int) (Manga, error) {
 	result := Manga{}
-	response, errRequest := DoRequest("GET", APIBaseURL+path.Join("manga", strconv.Itoa(mangaID)))
+	response, errRequest := doRequest("GET", APIBaseURL+path.Join("manga", strconv.Itoa(mangaID)))
+	if errRequest != nil {
+		logrus.Errorf("Request error: %s", errRequest)
+		return result, errRequest
+	}
+
+	errJSON := json.Unmarshal(response.Data, &result)
+	if errJSON != nil {
+		logrus.Errorf("Error parsing JSON: %s", errJSON)
+		return result, errJSON
+	}
+	return result, nil
+}
+
+func (manga *Manga) GetCovers() ([]MangaCover, error) {
+	var result []MangaCover
+	response, errRequest := doRequest("GET", APIBaseURL+path.Join("manga", strconv.Itoa(manga.ID), "covers"))
 	if errRequest != nil {
 		logrus.Errorf("Request error: %s", errRequest)
 		return result, errRequest
