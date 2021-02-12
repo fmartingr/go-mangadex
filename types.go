@@ -1,6 +1,10 @@
 package mangadex
 
-import "encoding/json"
+import (
+	"encoding/json"
+	"net/url"
+	"strconv"
+)
 
 type MangaDexResponse struct {
 	// Same as HTTP status code
@@ -139,4 +143,38 @@ type MangaGroup struct {
 	Delay            int                `json:"delay"`
 	LastUpdated      int                `json:"lastUpdated"`
 	Banner           string             `json:"banner"`
+}
+
+type ChaptersParams struct {
+	Limit       int  `json:"limit"`
+	Page        int  `json:"p"`
+	BlockGroups bool `json:"blockgroups"`
+}
+
+func NewChaptersParams() ChaptersParams {
+	return ChaptersParams{
+		Limit:       100,
+		Page:        0,
+		BlockGroups: false,
+	}
+}
+
+func (params *ChaptersParams) validate() {
+	if params.Limit < 1 || params.Limit > 100 {
+		params.Limit = 100
+	}
+}
+
+func (params *ChaptersParams) asQueryParams() url.Values {
+	queryParams := url.Values{}
+
+	if params.Page > 0 {
+		queryParams.Add("p", strconv.FormatInt(int64(params.Page), 10))
+	}
+	queryParams.Add("limit", strconv.FormatInt(int64(params.Limit), 10))
+	if params.BlockGroups {
+		queryParams.Add("blockgroups", strconv.FormatBool(params.BlockGroups))
+	}
+
+	return queryParams
 }
