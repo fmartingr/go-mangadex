@@ -16,13 +16,13 @@ func (manga *Manga) GetChapters(params ChaptersParams) ([]MangaChapterList, []Ma
 	var mangaGroupsResult []MangaGroup
 	params.validate()
 
-	response, errRequest := doRequest("GET", APIBaseURL+path.Join("manga", strconv.Itoa(manga.ID), "chapters")+"?"+params.asQueryParams().Encode())
+	response, errRequest := doRequest("GET", apiBaseURL+path.Join("manga", strconv.Itoa(manga.ID), "chapters")+"?"+params.asQueryParams().Encode())
 	if errRequest != nil {
 		logrus.Errorf("Request error: %s", errRequest)
 		return mangaChaptersResult, mangaGroupsResult, errRequest
 	}
 
-	var mangaDexChaptersResponse MangaDexChaptersResponse
+	var mangaDexChaptersResponse ChaptersResponse
 
 	errJSON := json.Unmarshal(response.Data, &mangaDexChaptersResponse)
 	if errJSON != nil {
@@ -39,7 +39,7 @@ func (manga *Manga) GetChapters(params ChaptersParams) ([]MangaChapterList, []Ma
 func (manga *Manga) GetChapter(chapter string) (MangaChapterDetail, error) {
 	var result MangaChapterDetail
 
-	response, errRequest := doRequest("GET", APIBaseURL+path.Join("chapter", chapter))
+	response, errRequest := doRequest("GET", apiBaseURL+path.Join("chapter", chapter))
 	if errRequest != nil {
 		logrus.Errorf("Request error: %s", errRequest)
 		return result, errRequest
@@ -57,7 +57,7 @@ func (manga *Manga) GetChapter(chapter string) (MangaChapterDetail, error) {
 // GetCovers requests the covers for the provided manga
 func (manga *Manga) GetCovers() ([]MangaCover, error) {
 	var result []MangaCover
-	response, errRequest := doRequest("GET", APIBaseURL+path.Join("manga", strconv.Itoa(manga.ID), "covers"))
+	response, errRequest := doRequest("GET", apiBaseURL+path.Join("manga", strconv.Itoa(manga.ID), "covers"))
 	if errRequest != nil {
 		logrus.Errorf("Request error: %s", errRequest)
 		return result, errRequest
@@ -73,8 +73,9 @@ func (manga *Manga) GetCovers() ([]MangaCover, error) {
 
 // GetManga retrieves the manga information for the provided ID.
 func GetManga(mangaID int) (Manga, error) {
+	initCache()
 	result := Manga{}
-	response, errRequest := doRequest("GET", APIBaseURL+path.Join("manga", strconv.Itoa(mangaID)))
+	response, errRequest := doRequest("GET", apiBaseURL+path.Join("manga", strconv.Itoa(mangaID)))
 	if errRequest != nil {
 		logrus.Errorf("Request error: %s", errRequest)
 		return result, errRequest

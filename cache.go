@@ -11,15 +11,18 @@ import (
 
 var cacheEnabled bool = true
 
+// EnableCache enables request caching for reads
 func EnableCache() {
 	cacheEnabled = true
 }
 
+// DisableCache disables cache reads
 func DisableCache() {
 	cacheEnabled = false
 }
 
-func getCachePath() string {
+// getBaseCachePath returns the base path for the cache storage
+func getBaseCachePath() string {
 	userCacheDir, errCache := os.UserCacheDir()
 	if errCache != nil {
 		logrus.Fatalf("Unable to retrieve cache directory: %s", errCache)
@@ -27,25 +30,30 @@ func getCachePath() string {
 	return filepath.Join(userCacheDir, "go-mangadex")
 }
 
-func getCachePathFor(mangadexURL *url.URL) string {
+// getCachePath returns the absolute path to the files cache for the provided URL
+func getCachePath(mangadexURL *url.URL) string {
 	fileName := getCacheFilename(mangadexURL)
-	return filepath.Join(getCachePath(), fileName)
+	return filepath.Join(getBaseCachePath(), fileName)
 }
 
+// getCacheFilename generates a cache filename based on the URL of the request
+// TODO: Use query arguments as well
 func getCacheFilename(mangadexURL *url.URL) string {
 	return strings.ReplaceAll(mangadexURL.Path, "/", "_")
 }
 
+// cacheExists checks that the cache for a certain URL exists or not
 func cacheExists(mangadexURL *url.URL) bool {
-	stat, err := os.Stat(getCachePathFor(mangadexURL))
+	stat, err := os.Stat(getCachePath(mangadexURL))
 	if os.IsNotExist(err) {
 		return false
 	}
 	return !stat.IsDir()
 }
 
+// initCache makes sure that the cache directory exists so reads and writes on cache folders won't fail
 func initCache() {
-	cachePath := getCachePath()
+	cachePath := getBaseCachePath()
 	_, err := os.Stat(cachePath)
 	if os.IsNotExist(err) {
 		logrus.Infof("Cache directory does not exist, creating. [%s]", cachePath)

@@ -11,19 +11,18 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-const APIBaseURL = "https://api.mangadex.org/v2/"
+const apiBaseURL = "https://api.mangadex.org/v2/"
 
-func doRequest(method string, requestURL string) (*MangaDexResponse, error) {
-	result := MangaDexResponse{}
+func doRequest(method string, requestURL string) (*Response, error) {
+	result := Response{}
 	parsedURL, errParse := url.Parse(requestURL)
 	if errParse != nil {
 		return &result, errParse
 	}
 
 	if cacheEnabled {
-		initCache()
 		if cacheExists(parsedURL) {
-			cacheData, errRead := ioutil.ReadFile(getCachePathFor(parsedURL))
+			cacheData, errRead := ioutil.ReadFile(getCachePath(parsedURL))
 			if errRead != nil {
 				logrus.Fatalf("Error reading cache for URL: %s [%s]: %s", parsedURL.String(), getCacheFilename(parsedURL), errRead)
 			}
@@ -33,9 +32,8 @@ func doRequest(method string, requestURL string) (*MangaDexResponse, error) {
 			}
 			logrus.Debugf("Request loaded from cache: %s", parsedURL.String())
 			return &result, nil
-		} else {
-			logrus.Debugf("Cache not found for %s", parsedURL.String())
 		}
+		logrus.Debugf("Cache not found for %s", parsedURL.String())
 	}
 
 	logrus.Tracef("Making request %s", parsedURL)
@@ -76,7 +74,7 @@ func doRequest(method string, requestURL string) (*MangaDexResponse, error) {
 	// Write cache
 	logrus.Infof("Writting cache for %s", parsedURL.String())
 	logrus.Infof("Writting cache to: %s", getCacheFilename(parsedURL))
-	errWriteCache := ioutil.WriteFile(getCachePathFor(parsedURL), body, 0644)
+	errWriteCache := ioutil.WriteFile(getCachePath(parsedURL), body, 0644)
 	if errWriteCache != nil {
 		logrus.Warnf("Can't write to cache: %s", errWriteCache)
 	}
