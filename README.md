@@ -2,17 +2,13 @@
 
 Mangadex API client in Golang.
 
-## Chaching
-
-...
-
 ## Usage
 
 ``` go
 import (
     "log"
 
-    "code.fmartingr.dev/fmartingr/go-mangadex"
+    "github.com/fmartingr/go-mangadex"
 )
 
 func main() {

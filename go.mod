@@ -1,4 +1,4 @@
-module code.fmartingr.dev/fmartingr/go-mangadex
+module github.com/fmartingr/go-mangadex
 
 go 1.15
 
