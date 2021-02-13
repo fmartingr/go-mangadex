@@ -2,6 +2,8 @@
 
 Mangadex API client in Golang.
 
+Stable version under **stable** branch. Latest development under **latest** branch.
+
 ## Usage
 
 ``` go
