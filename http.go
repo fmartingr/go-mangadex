@@ -41,7 +41,7 @@ func doRequest(method string, requestURL string) (*Response, error) {
 		Method: method,
 		URL:    parsedURL,
 		Header: map[string][]string{
-			"User-Agent": {"go-mangadex/1.0.0"},
+			"User-Agent": {"go-mangadex/1.0.1"},
 		},
 	}
 
