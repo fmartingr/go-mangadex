@@ -72,8 +72,8 @@ func doRequest(method string, requestURL string) (*Response, error) {
 	logrus.Tracef("Response body: %s", body)
 
 	// Write cache
-	logrus.Infof("Writting cache for %s", parsedURL.String())
-	logrus.Infof("Writting cache to: %s", getCacheFilename(parsedURL))
+	logrus.Tracef("Writting cache for %s", parsedURL.String())
+	logrus.Tracef("Writting cache to: %s", getCacheFilename(parsedURL))
 	errWriteCache := ioutil.WriteFile(getCachePath(parsedURL), body, 0644)
 	if errWriteCache != nil {
 		logrus.Warnf("Can't write to cache: %s", errWriteCache)
