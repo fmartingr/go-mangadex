@@ -39,7 +39,8 @@ func getCachePath(mangadexURL *url.URL) string {
 // getCacheFilename generates a cache filename based on the URL of the request
 // TODO: Use query arguments as well
 func getCacheFilename(mangadexURL *url.URL) string {
-	return strings.ReplaceAll(mangadexURL.Path, "/", "_")
+	filename := strings.ReplaceAll(mangadexURL.Path, "/", "_")
+	return filename + strings.ReplaceAll(mangadexURL.Query().Encode(), "&", "-")
 }
 
 // cacheExists checks that the cache for a certain URL exists or not
